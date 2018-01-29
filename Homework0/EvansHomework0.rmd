@@ -1,0 +1,246 @@
+<h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc" style="margin-top: 1em;"><ul class="toc-item"><li><span><a href="#Homework-0" data-toc-modified-id="Homework-0-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Homework 0</a></span><ul class="toc-item"><li><span><a href="#0.3" data-toc-modified-id="0.3-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>0.3</a></span></li><li><span><a href="#0.4" data-toc-modified-id="0.4-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>0.4</a></span></li><li><span><a href="#0.7" data-toc-modified-id="0.7-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>0.7</a></span></li><li><span><a href="#.17" data-toc-modified-id=".17-1.4"><span class="toc-item-num">1.4&nbsp;&nbsp;</span>.17</a></span></li><li><span><a href="#.18" data-toc-modified-id=".18-1.5"><span class="toc-item-num">1.5&nbsp;&nbsp;</span>.18</a></span></li></ul></li></ul></div>
+
+# Homework 0
+
+## 0.3
+(Q) = Quantitative, (C) = Categorical 
+a. 
+Observational Units:
+Baseball games
+
+Response Variable: 
+Time required to play a Major League Baseball game (Q).
+
+Explanatory Variable:
+total number of runs scored (Q), margin of victory (Q), total number of pitchers used (Q), ballpark attendance (Q), which league the teams were in (C). 
+
+b. 
+Observational Units:
+A putt
+
+Response Variable: 
+The liklihood of making a putt
+
+Explanatory Variable:
+length of putt (Q)
+
+c. 
+Observational Units:
+LaDainian Tomlinson
+
+Response Variable: 
+No response variable
+
+Explanatory Variable:
+No explanatory variables
+
+## 0.4
+
+a. 
+Observational Units:
+Volleyball player 
+
+Response Variable: 
+The liklihood of winning a point (C) 
+
+Explanatory Variable:
+Type of serve (C)
+
+
+b. 
+Observational Units:
+Sport games 
+
+Response Variable: 
+Home field advantage effect (C)
+
+Explanatory Variable:
+Major team sports (C)
+
+
+c. 
+Observational Units:
+Individual golfers 
+
+Response Variable: 
+Distance the golf ball is driven (Q) and the percentage that hits the fairway (Q)
+
+Explanatory Variable:
+Sex of the golfer (C) 
+
+## 0.7
+
+a. What is the population of interest to the registrar at this college? 
+All members of the entering class to the college.
+
+b. Are the descriptive summaries computee by the registrar statistics or parameters? Explain.
+Parameters because they computed the summaries using all members of the entering class i.e. the entire population
+
+c. What is the population of interest to the Math department? 
+Students in the entering class who want to take mathematics
+
+d. Are the numerical summaries statistics or parameters? Explain. 
+Statistics because the math department takes a sample to compute them; they do not use the entire population.
+
+## .17
+
+```{r}
+library(Stat2Data)
+library(lattice)
+data(Marathon)
+# Remove all rows with unknown values (there is only one)
+Marathon = na.omit(Marathon)
+head(Marathon)
+```
+
+Define competing models and associated hypothesis
+
+$\mu_1$ = The average time on short runs<br>
+$\mu_2$ = The average time on long runs
+
+Null Hypothesis: $\mu_1 = \mu_2 \Rightarrow \hat{y} = \mu_{\bar{y}} + \epsilon$, where $\bar{y}$ is the sample mean
+<br>
+Alternative Hypothesis: $\mu_1 \neq \mu_2 \Rightarrow \hat{y} = \mu_i + \epsilon$
+
+Find p-value for the hypothesis you defined above as well as the 95% confidence interval
+
+```{r}
+# Following what was done for WeightLossIncetive4
+t.test(Marathon$PaceMin ~ Marathon$Short)
+```
+
+This is just for reference: t-test assumptions include those regarding the scale of measurement, random sampling, normality of data distribution, adequacy of sample size and equality of variance in standard deviation (standard deviations of samples are ~ equal). From: https://www.investopedia.com/ask/answers/073115/what-assumptions-are-made-when-conducting-ttest.asp
+
+Interpret p-value and the 95% condifience interval. in regards to the research question.
+
+Given that the p-value is sufficiently small (the t-statistic is well outside the 95% confidence interval), 
+we can safely reject the null hypothesis. This means that it is highly unlikely that the results were do to 
+chance, and it is much more likely that there is a real difference in the average run times per mile for the runner. With that said and the fact that the runner runs faster per mile when the distance of the run is shorter, we can infer that the runner will in general run faster per mile in this case. 
+
+Assess the model fit by assessing the residuals (QQ Plot) (No R code displayed).
+
+```{r}
+shortPaceMinMu <- mean(Marathon$PaceMin[Marathon$Short==0])
+longPaceMinMu <- mean(Marathon$PaceMin[Marathon$Short==1])
+
+Fit <- shortPaceMinMu*(1-Marathon$Short) + longPaceMinMu*Marathon$Short
+Resid <- Marathon$PaceMin - Fit
+
+head(cbind(Marathon$PaceMin, Fit, Resid))
+```
+
+```{r}
+xyplot(Resid ~ Marathon$Short)
+```
+
+```{r}
+# Useful resource: https://onlinecourses.science.psu.edu/stat461/node/51
+
+LongResidual = Resid[Marathon$Short==1]
+ShortResidual = Resid[Marathon$Short==0]
+```
+
+```{r}
+# This controls how many plots are plotted c(# rows, # columns)
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+hist(LongResidual)
+
+qqnorm(LongResidual, ylab="Long Residual", main="Long Residual")
+qqline(LongResidual)
+qqnorm(ShortResidual, ylab="Short Residual", main="Short Residual")
+qqline(ShortResidual)
+```
+
+Analyze the QQ plot
+
+Based on the historgram and the QQ plot, there is a right skew and it deviates from the normal distribution in the tails, which could mean we are incorrect to assume a normal distribution and possibly should reject the validity of the t test results. It does seem relatively normal though so I think we need a more precise test to know for certain if we should consider the data's distribution to be normal
+
+## .18
+
+Define competing models and associated hypothesis
+
+$\mu_{1}$ = The average running pace when runner is older<br>
+$\mu_{1}$ = The average running pace when runner is younger
+
+Null Hypothesis: $\mu_{1} = \mu_{2} \Rightarrow \hat{y} = \mu_{\bar{y}} + \epsilon$, where $\bar{y}$ is the sample mean
+<br>
+Alternative Hypothesis: $\mu_{1} \neq \mu_{2} \Rightarrow \hat{y} = \mu_i + \epsilon$
+
+and 
+
+$\mu_{1}$ = The average distance per day when runner is older<br>
+$\mu_{2}$ = The average distance per day when runner is younger
+
+Null Hypothesis: $\mu_{1} = \mu_{2} \Rightarrow \hat{y} = \mu_y + \epsilon$, where $\bar{y}$ is the sample mean 
+<br>
+Alternative Hypothesis: $\mu_{1} \neq \mu_{2} \Rightarrow \hat{y} = \mu_i + \epsilon$
+
+Find p-value for the hypothesis you defined above as well as the 95% confidence interval
+
+```{r}
+# We do this for PaceMin and Miles
+print('Pace in Min test')
+t.test(Marathon$PaceMin ~ Marathon$After2004)
+print('Miles test')
+t.test(Marathon$Miles ~ Marathon$After2004)
+```
+
+Interpret p-value and the 95% condifience interval in regards to the research question.
+
+According to the p-value, t-statistic, and confidence interval in both instances, the runner has a real difference in average miles run and pace per mile in the two different time periods. Since the average pace per mile is lower in later years, perhaps the runner is slower because he or she is getting older. However, he or she does run more miles, so we could make an educated guess that his or her stamina is improving over time
+
+Assess the model fit by assessing the residuals (QQ Plot) (No R code displayed).
+
+```{r}
+afterPaceMinMu <- mean(Marathon$PaceMin[Marathon$After2004==1])
+beforePaceMinMu <- mean(Marathon$PaceMin[Marathon$After2004==0])
+
+FitPaceMin <- afterPaceMinMu*(1-Marathon$After2004) + beforePaceMinMu*Marathon$After2004
+ResidPaceMin <- Marathon$PaceMin - FitPaceMin
+
+afterMileMu <- mean(Marathon$Mile[Marathon$After2004==1])
+beforeMileMu <- mean(Marathon$Mile[Marathon$After2004==0])
+
+FitMile <- afterMileMu*(1-Marathon$After2004) + beforeMileMu*Marathon$After2004
+ResidMile <- Marathon$Mile - Fit
+
+head(cbind(Marathon$PaceMin, FitPaceMin, ResidPaceMin))
+head(cbind(Marathon$Mile, FitMile, ResidMile))
+```
+
+```{r}
+AfterMileResidual = ResidMile[Marathon$After2004==1]
+BeforeMileResidual = ResidMile[Marathon$After2004==0]
+
+AfterPaceMinResidual = ResidPaceMin[Marathon$After2004==1]
+BeforePaceMinResidual = ResidPaceMin[Marathon$After2004==0]
+
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+hist(BeforeMileResidual)
+qqnorm(BeforeMileResidual, ylab="Before 2004 Mile Residual", main="Before 2004 Mile Residual")
+qqline(BeforeMileResidual)
+
+qqnorm(AfterMileResidual, ylab="After 2004 Mile Residual", main="After 2004 Mile Residual")
+qqline(AfterMileResidual)
+```
+
+```{r}
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+hist(AfterPaceMinResidual)
+qqnorm(BeforePaceMinResidual, ylab="Before 2004 PaceMin Residual", main="Before 2004 PaceMin Residual")
+qqline(BeforePaceMinResidual)
+
+qqnorm(AfterPaceMinResidual, ylab="After 2004 PaceMin Residual", main="After 2004 PaceMin Residual")
+qqline(AfterPaceMinResidual)
+```
+
+Analyze the QQ plot
+
+The QQ plot Before 2004 Mile and After 2004 Mile certainly does not follow the normal line so this means that the results of the t test are invalid and we cannot conclude that there is a real difference (i.e. not due to random chance) in miles ran before 2004 and after 2004
+
+The QQ plot for Before 2004 PaceMin definitely seems to have a right skew as more data points are clustered in the negative quantiles, and the points in the positive observed quantiles do not follow the line. This might break the assumption of normality, and therefore our test results may be invalid. The after 2004 PaceMin QQ plot follows the normal line a lot better so it probably does not break the assumption of normality. 
+
