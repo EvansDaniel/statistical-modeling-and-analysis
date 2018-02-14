@@ -1,0 +1,122 @@
+<h1 id=Homework-1>Homework 1<h1/>
+
+```{r}
+library(Stat2Data)
+library(lattice)
+library(psych)
+library(mosaic)
+```
+
+```{r}
+data(BaseballTimes)
+head(BaseballTimes)
+```
+
+<h2 id=Problem-1.27>Problem 1.27<h2/>
+
+```{r}
+hist(BaseballTimes$Time)
+```
+
+<h3 id=a.1)-The-distribution-is-right-skewed-(you-can-see-that-there-is-positive-skew-in-the-summary-stats-below)>a.1) The distribution is right skewed (you can see that there is positive skew in the summary stats below)<h3/>
+
+```{r}
+describe(BaseballTimes)
+```
+
+<h3 id=a.2)-Below-is-the-outlier>a.2) Below is the outlier<h3/>
+
+```{r}
+# Get the indices of all rows where the Time column has a value > 300
+# Pass that to the index operator [] and you'll get just the rows for those indices
+# You can pass a vector of column names as the second argument to the index operator ([])
+# if you want only those columns, as it is we get all columns back 
+BaseballTimes[(BaseballTimes$Time > 300), ]
+```
+
+<h3 id=a.3)-My-explanation-is-that-since-there-was-a-margin-of-1,-it-is-possible-that-they-went-into-extra-innings-and-the-game-only-ended-once-one-of-the-teams-scored-(which-happened-to-take-a-decent-amount-of-time).-Also,-Pitchers-would-explain-it-as-well-because-it-takes-game-time-to-switch-out-pitchers>a.3) My explanation is that since there was a margin of 1, it is possible that they went into extra innings and the game only ended once one of the teams scored (which happened to take a decent amount of time). Also, Pitchers would explain it as well because it takes game time to switch out pitchers<h3/>
+
+```{r}
+# xyplot(BaseballTimes$Time ~ BaseballTimes$Pitchers, main='Pitchers vs Time')
+columns = colnames(BaseballTimes)
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+for(col in columns) {
+    if(class(BaseballTimes[[col]]) == 'integer' && col != 'Time') {
+        print(xyplot(BaseballTimes$Time ~ BaseballTimes[[col]], 
+              main=paste(col, 'vs. Time'), xlab=col))
+    }
+}
+# print(cor(BaseballTimes$Time, BaseballTimes$Pitchers))
+```
+
+<h3 id=b)-The-best-predictor-seems-to-be-the-Pitchers-field-because-it-is-linear-and-there-is-a-strong-positive,-relatively-linear-association>b) The best predictor seems to be the Pitchers field because it is linear and there is a strong positive, relatively linear association<h3/>
+
+```{r}
+pitchersTimeLm = lm(BaseballTimes$Time ~ BaseballTimes$Pitchers)
+pitchersTimeLm
+```
+
+<h1 id=c)-Regression-equation:-$\hat{y}-=-94.84-+-10.71x$>c) Regression equation: $\hat{y} = 94.84 + 10.71x$<h1/><h1 id=The-slope-coefficient-means-that-time-will-increase-by-10.71-minutes-per-Pitcher-change.-The-intercept-means-that-if-no-pitchers-switched-in-the-game,-then-the-game-would-last-on-average-94.84-minutes>The slope coefficient means that time will increase by 10.71 minutes per Pitcher change. The intercept means that if no pitchers switched in the game, then the game would last on average 94.84 minutes<h1/>
+
+```{r}
+plot(pitchersTimeLm$fitted.values, pitchersTimeLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(pitchersTimeLm$residuals, main='QQ plot')
+qqline(pitchersTimeLm$residuals)
+```
+
+<h3 id=d)-The-tails-of-the-QQ-plot-do-not-follow-the-normal-line.-So-we-can-conclude-that-the-normality-condition-for-the-residuals-is-not-met.-The-fitted-vs-residuals-plot-indicates-a-zero-mean-on-the-residuals.>d) The tails of the QQ plot do not follow the normal line. So we can conclude that the normality condition for the residuals is not met. The fitted vs residuals plot indicates a zero mean on the residuals.<h3/>
+
+<h2 id=Problem-1.28>Problem 1.28<h2/>
+
+<h3 id=a)-The-outlier-found-in-problem-1.27-also-has-the-largest-residual-for-the-model-used-in-problem-1.27>a) The outlier found in problem 1.27 also has the largest residual for the model used in problem 1.27<h3/>
+
+```{r}
+BaseballTimes$Id <- seq.int(nrow(BaseballTimes))
+```
+
+```{r}
+BaseballTimes <- BaseballTimes[ !(BaseballTimes$Id %in% c(15)), ]
+```
+
+```{r}
+BaseballTimes
+```
+
+```{r}
+columns = colnames(BaseballTimes)
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+for(col in columns) {
+    if(class(BaseballTimes[[col]]) == 'integer' && col != 'Time') {
+        print(xyplot(BaseballTimes$Time ~ BaseballTimes[[col]], 
+              main=paste(col, 'vs. Time'), xlab=col))
+    }
+}
+```
+
+```{r}
+pitchersTimeLm = lm(BaseballTimes$Time ~ BaseballTimes$Pitchers)
+pitchersTimeLm
+```
+
+<h1 id=c)-Regression-equation:-$\hat{y}-=-113.86-+-7.746x$>c) Regression equation: $\hat{y} = 113.86 + 7.746x$<h1/><h1 id=The-slope-coefficient-means-that-time-will-increase-by-7.746-minutes-per-Pitcher-change.-The-intercept-means-that-if-no-pitchers-switched-in-the-game,-then-the-game-would-last-on-average-113.86-minutes>The slope coefficient means that time will increase by 7.746 minutes per Pitcher change. The intercept means that if no pitchers switched in the game, then the game would last on average 113.86 minutes<h1/>
+
+```{r}
+plot(pitchersTimeLm$fitted.values, pitchersTimeLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(pitchersTimeLm$residuals, main='QQ plot')
+qqline(pitchersTimeLm$residuals)
+```
+
+<h3 id=b/c)-Omitting-the-outlier-made-the-plot-of-Pitcher-vs-Time-more-linear.-The-Residuals-vs-Fit-plot-shows-roughly-zero-mean-for-the-residuals.-However,-the-QQ-plot-is-still-not-following-the-normal-line.-Therefore,-we-cannot-accept-this-analysis-has-questionable-validity>b/c) Omitting the outlier made the plot of Pitcher vs Time more linear. The Residuals vs Fit plot shows roughly zero mean for the residuals. However, the QQ plot is still not following the normal line. Therefore, we cannot accept this analysis has questionable validity<h3/>
+
+```{r}
+```
