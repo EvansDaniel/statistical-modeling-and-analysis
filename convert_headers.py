@@ -40,7 +40,7 @@ for i in range(len(cells)):
 				start = '<h' + str(count) 
 				a_id = re.sub(r'[\n\r]+', '', src[last_hashtag_index:].strip().replace(' ', '-'))
 				replacement = start + ' id='+ a_id +'>' + src[last_hashtag_index:].strip() + start + '/>'
-				ipynb['cells'][i]['source'][j] = replacement
+				#ipynb['cells'][i]['source'][j] = replacement
 
 file_to_write = open(output_file, 'w+')
 print('Found {} headers. Writing to {}'.format(num_headers, output_file))

@@ -1,0 +1,517 @@
+# Homework 1
+
+```{r}
+library(Stat2Data)
+library(lattice)
+library(psych)
+library(mosaic)
+library(ggplot2)
+```
+
+```{r}
+data(BaseballTimes)
+head(BaseballTimes)
+```
+
+## Problem 1.27
+
+```{r}
+hist(BaseballTimes$Time)
+```
+
+### a.1) The distribution is right skewed (you can see that there is positive skew in the summary stats below)
+
+```{r}
+describe(BaseballTimes)
+```
+
+### a.2) Below is the outlier
+
+```{r}
+# Get the indices of all rows where the Time column has a value > 300
+# Pass that to the index operator [] and you'll get just the rows for those indices
+# You can pass a vector of column names as the second argument to the index operator ([])
+# if you want only those columns, as it is we get all columns back 
+BaseballTimes[(BaseballTimes$Time > 300), ]
+```
+
+### a.3) My explanation is that since there was a margin of 1, it is possible that they went into extra innings and the game only ended once one of the teams scored (which happened to take a decent amount of time). Also, Pitchers would explain it as well because it takes game time to switch out pitchers 
+
+```{r}
+# xyplot(BaseballTimes$Time ~ BaseballTimes$Pitchers, main='Pitchers vs Time')
+columns = colnames(BaseballTimes)
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+for(col in columns) {
+    if(class(BaseballTimes[[col]]) == 'integer' && col != 'Time') {
+        print(xyplot(BaseballTimes$Time ~ BaseballTimes[[col]], 
+              main=paste(col, 'vs. Time'), xlab=col))
+    }
+}
+# print(cor(BaseballTimes$Time, BaseballTimes$Pitchers))
+```
+
+### b) The best predictor seems to be the Pitchers field because it is linear and there is a strong positive, relatively linear association
+
+```{r}
+pitchersTimeLm = lm(BaseballTimes$Time ~ BaseballTimes$Pitchers)
+pitchersTimeLm
+```
+
+# c) Regression equation: $\hat{y} = 94.84 + 10.71x$
+# The slope coefficient means that time will increase by 10.71 minutes per Pitcher change. The intercept means that if no pitchers switched in the game, then the game would last on average 94.84 minutes
+
+```{r}
+plot(pitchersTimeLm$fitted.values, pitchersTimeLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(pitchersTimeLm$residuals, main='QQ plot')
+qqline(pitchersTimeLm$residuals)
+```
+
+### d) The tails of the QQ plot do not follow the normal line. So we can conclude that the normality condition for the residuals is not met. The fitted vs residuals plot indicates a zero mean on the residuals. 
+
+### Problem 2.37
+
+```{r}
+for(col in colnames(BaseballTimes)) {
+    if(class(BaseballTimes[[col]]) == 'integer' && col != 'Time') {
+        print(paste(col, "vs Time", stats::cor(BaseballTimes[[col]], BaseballTimes$Time)))
+    }
+}
+print(paste("Max = .902, Pitchers vs Time"))
+```
+
+### The best fit is provided by the predictor variable that is most highly correlated. Some of this analysis will be repeated below because for another question it asked me to use the best predictor variable to predict Time, and in that case as well, it was the variable Predictor.
+
+```{r}
+pitchersTimeLm = lm(BaseballTimes$Time ~ BaseballTimes$Pitchers)
+summary(pitchersTimeLm)
+```
+
+### Regression Equation: $\hat{Time} = 113.869 + 7.746*\text{Pitchers}$, with slope coefficient of 7.746
+
+```{r}
+cor.test(BaseballTimes$Pitchers, BaseballTimes$Time)
+```
+
+### According to the p-value, we can conclude that there is significant evidence that suggests that the true value of the population correlation is not equal to zero. We can also see this in the fact that the confidence interval does not contain 0 
+
+```{r}
+qqnorm(pitchersTimeLm$residuals, main='QQ plot')
+qqline(pitchersTimeLm$residuals)
+```
+
+```{r}
+plot(pitchersTimeLm$fitted.values, pitchersTimeLm$residuals)
+abline(h=0)
+```
+
+### The residuals vs fit plot suggests a zero mean with randomly scattered errors (no clear nonlinear trend). The QQ plot suggests that the error terms are not perfectly normal. I would say that there are significantly nonnormal to invalidate any inferences made on the model 
+
+## Problem 1.28
+
+### a) The outlier found in problem 1.27 also has the largest residual for the model used in problem 1.27 
+
+```{r}
+BaseballTimes$Id <- seq.int(nrow(BaseballTimes))
+```
+
+```{r}
+BaseballTimes <- BaseballTimes[ !(BaseballTimes$Id %in% c(15)), ]
+```
+
+```{r}
+columns = colnames(BaseballTimes)
+par(mfrow=c(1,3))
+par(pin=c(2,2))
+for(col in columns) {
+    if(class(BaseballTimes[[col]]) == 'integer' && col != 'Time') {
+        print(xyplot(BaseballTimes$Time ~ BaseballTimes[[col]], 
+              main=paste(col, 'vs. Time'), xlab=col))
+    }
+}
+```
+
+```{r}
+pitchersTimeLm = lm(BaseballTimes$Time ~ BaseballTimes$Pitchers)
+pitchersTimeLm
+```
+
+# c) Regression equation: $\hat{y} = 113.86 + 7.746x$
+# The slope coefficient means that time will increase by 7.746 minutes per Pitcher change. The intercept means that if no pitchers switched in the game, then the game would last on average 113.86 minutes
+
+```{r}
+plot(pitchersTimeLm$fitted.values, pitchersTimeLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(pitchersTimeLm$residuals, main='QQ plot')
+qqline(pitchersTimeLm$residuals)
+```
+
+### b/c) Omitting the outlier made the plot of Pitcher vs Time more linear. The Residuals vs Fit plot shows roughly zero mean for the residuals. However, the QQ plot is still not following the normal line. Therefore, the conditions for inference are not met.
+
+### Summary: I learned that the number of pitchers in a game is a reasonable predictor of the amount of time the game will take. We couldn't make any inference on the linear model because the normality of errors condition is not met for this data, but the model does explain 81% of the variance in the response variable (Time). Based on the scatterplots above and the correlation, the next best predictor variable would be Runs.
+
+### Start of Homework 1.2 stuff
+
+### Problem 2.1 - False
+
+### Problem 2.2 - False
+
+### Problem 2.3 - True
+
+### Problem 2.4 - False
+
+### Problem 2.5 - False
+
+### Problem 2.6 - True
+
+### Problem 2.7 - True
+
+### Problem 1.12
+
+### Problem 1.2 - Sparrows Slope = 0.467
+
+### Problem 1.3 - Sparrows Intercept = 1.37
+
+### Problem 1.4 - Sparrows Regression Standard Error = 0.03472
+
+### Problem 1.5 - DF = 114
+
+### Problem 1.6 Residual = 100 - 10 = 90
+
+### Problem 1.10
+
+```{r}
+data(Sparrows)
+hist(Sparrows$Weight)
+```
+
+### a) It looks like the weight is quite normally distributed which indicates that our errors will probably not be a perfect normal distribution either
+
+```{r}
+winglengthLm = lm(Sparrows$Weight ~ Sparrows$WingLength)
+## This computes the residuals for all y and corresponding y_hats
+winglengthStdRes = rstandard(winglengthLm)
+qqnorm(winglengthStdRes)
+qqline(winglengthStdRes)
+```
+
+### Based on the plot, we have mostly normal errors but it deviates slightly at the tails. This would probably still be considered normal, and the assumptions of the t tests would hold
+
+```{r}
+xyplot(Sparrows$Weight ~ Sparrows$WingLength, type=c('p','r'))
+```
+
+###  c) You could probably consider the second point from the left in the lower left hand side of the plot to be an outlier. It doesn't follow the general linear trend set by sparrows with larger and smaller wing length. It also has relatively high leverage since it is at a more extreme value of wing length
+
+### Problem 2.16
+
+```{r}
+summary(winglengthLm)
+```
+
+### a) The slope (for this sample 0.46740) is significantly different from 0. This is because the p-value is significantly less than .05. The p-value is so small that there is very very strong evidence of a relationship between wing length and weight.
+
+```{r}
+# This is the manual version
+# Margin of error
+diff = 1.96 * 0.03472
+print(paste("diff =", diff))
+# Compute above and below
+above = 0.46740 + diff
+below = 0.46740 - diff
+print(paste('confidence interval',below, above))
+
+# This is the nicer version
+confint(winglengthLm, 'Sparrows$WingLength', level=0.95)
+```
+
+### b) This confidence interval says that if the assumptions of the linear regression model hold (which I would say they do) that 95% of samples produce an interval which overlaps with the true regression coefficient $\beta_1$. So we are 95% confident that our estimate, $\hat{\beta_1} = 0.03472$, is within (+/-) .06805 mm of the true regression coefficient $\beta_1$
+
+### The confidence interval does not contain 0. Thus we can be certain that the true value of $\beta_1$ is not 0. If zero were in the interval, we would have a p-value >= .05
+
+### Problem 2.17
+
+### <br>$h_0: p = 0$ <br> $h_1: p \neq 0$
+
+```{r}
+cor.test(Sparrows$WingLength, Sparrows$Weight)
+```
+
+### a) Based on the p-value for the 5% significance test, we can conclude that there is a significant association between wing length and weight, meaning that the data suggests that $p \neq 0$
+
+```{r}
+summary(winglengthLm)
+```
+
+### b) This information is contained in the $r^2$ value of the output. For the given data (sample), the model explains 61.39% of the variation. 
+
+```{r}
+anova(winglengthLm)
+```
+
+### c) The f-test indicates that the wing length coefficient $\beta_1$ is significantly different from 0. This is because under the $h_0$, we would expect the F value to be close to 1. The F value we got is very different from 1 and the p-value is extremely small as well.
+
+```{r}
+ 13.463^2
+```
+
+### The square of the t-value from testing correlation is the same as the F-value
+
+### Summary: From the analysis, we can see that the wing length of a sparrow is a good predictor of weight in our model since our model explains about 61% of the variance in the response. There is a strong positive correlation between wing length and weight (this is reflected in the positive regression coefficient estimate in our model), which indicates that sparrows with larger wing span weigh more on average. 
+
+### Problem 1.12
+
+```{r}
+data(Caterpillars)
+```
+
+```{r}
+ctp = Caterpillars
+```
+
+```{r}
+xyplot(ctp$WetFrass ~ ctp$Mass)
+```
+
+### It seems linear up to mass = 10, but then the pattern is more of a polynomial. Also it seems that mass and the wetfrass could be log transformed given the large cluster of points at lower mass and wetfrass values
+
+```{r}
+xyplot(log(ctp$WetFrass) ~ log(ctp$Mass), type=c('p', 'r'))
+```
+
+### The pattern is much more linear but there are stacks of points below the more linear part of the line. They seem more or less equal distance in x direction from each other. I would prefer this model as compared to the first
+
+```{r}
+massWetFrassLm = lm(log(ctp$WetFrass) ~ log(ctp$Mass))
+summary(massWetFrassLm)
+```
+
+### Prediction Equation: $\log_{e}(\hat{wetFrass}) = \beta_0 + \beta_1 \log_{e}(\text{Mass}) $, where $\beta_0 = -1.70072$ and $\beta_1 = 1.05361$
+
+```{r}
+# qplot(x = Mass, y = WetFrass, data = ctp, color = Instar, main = "Title")
+xyplot(log(ctp$WetFrass) ~ log(ctp$Mass), group=ctp$Instar, type=c('p', 'r'), auto.key=TRUE)
+```
+
+### I think that the fifth life stage follows the regression line in log transformed model the best but even it deviates, overestimating for smaller mass and earlier life stages. It seems that we should incorporate the instar variable into our model to make better predictions
+
+```{r}
+xyplot(log(ctp$WetFrass) ~ log(ctp$Mass), group=ctp$Fgp, type=c('p', 'r'), auto.key=TRUE)
+```
+
+### The first group follows a linear trend (the Y group) and the second doesn't. It seems to be stacked vertically rather than more linear 
+
+### Problem 1.13
+
+```{r}
+xyplot(ctp$Nassim ~ ctp$Mass, type=c('p','r'))
+```
+
+### a) This is definitely not linear. It might be more linear if we log transform it. It looks more polynomial than anything else.
+
+```{r}
+xyplot(ctp$LogNassim ~ ctp$LogMass, type=c('p','r'))
+```
+
+### b) This looks more linear but it looks like there is some underlying variable governing the variance, particularly at higher values of LogMass
+
+### c) I prefer the second plot as it is more linear
+
+```{r}
+massNassimLm = lm(ctp$LogNassim ~ ctp$LogMass)
+summary(massNassimLm)
+```
+
+### c) Prediction Equation: $\log_{10}(\hat{Lassim}) = \beta_0 + \beta_1 \log_{10}(\text{Mass}) $, where $\beta_0 = -0.73861$ and $\beta_1 = 1.05361$
+
+```{r}
+xyplot(ctp$LogNassim ~ ctp$LogMass, group=ctp$Instar, type=c('p', 'r'), auto.key=TRUE)
+```
+
+### It looks like the first 3 life stages follow (with some deviation) the same linear trend as that shown in the original xyplot. Furthermore, the linear trend is not consistent for the last 2 life stages
+
+```{r}
+xyplot(log(ctp$Nassim) ~ log(ctp$Mass), group=ctp$Fgp, type=c('p', 'r'), auto.key=TRUE)
+```
+
+### e) The linear trend is definitely better when the caterpillars are in a free growth period
+
+### Problem 2.38
+
+```{r}
+columns = c('Mass','Intake','WetFrass','DryFrass','Cassim','Nassim')
+Caterpillars = na.omit(Caterpillars)
+for(col in columns) {
+    print(paste(col, 'vs', 'Nfrass', stats::cor(Caterpillars[[col]], Caterpillars$Nfrass)))
+}
+print(paste('Max correlation is Wetfrass vs Nfrass', .99))
+```
+
+```{r}
+xyplot(Caterpillars$Nfrass ~ Caterpillars$WetFrass, type=c('p','r'))
+```
+
+```{r}
+wetFrassNfrassLm = lm(Caterpillars$Nfrass ~ Caterpillars$WetFrass)
+summary(wetFrassNfrassLm)
+```
+
+### b) Regression Equation: $\hat{Nfrass} = 2.895\mathrm{e}{-4} + 9.653\mathrm{e}{-3}*\text{wetfrass}$
+
+```{r}
+cor.test(Caterpillars$WetFrass, Caterpillars$Nfrass)
+```
+
+### Based on the p-value, the data suggests that the true correlation is significantly different from 0
+
+```{r}
+plot(wetFrassNfrassLm$fitted.values, wetFrassNfrassLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(wetFrassNfrassLm$residuals, main='QQ plot')
+qqline(wetFrassNfrassLm$residuals)
+```
+
+```{r}
+summary(wetFrassNfrassLm)
+```
+
+### Based on the coefficient of determination, the fit of the model is very good. 98% of the variance in the response variable is explained. Therefore, this model would probably be good for prediction. However, based on the fit vs residuals plot above, it looks like there isn't a zero mean for the error terms and there seems to be a curving pattern in the residuals. Along with that, the qq plot deviates significantly from the normal line. Thus, significance tests for the regression coefficients would not be valid. 
+
+### Problem 2.39
+
+```{r}
+columns = c('Mass','Intake','WetFrass','DryFrass','Nfrass','Nassim')
+Caterpillars = na.omit(Caterpillars)
+for(col in columns) {
+    print(paste(col, 'vs', 'Cassim', stats::cor(Caterpillars[[col]], Caterpillars$Cassim)))
+}
+print(paste('Max correlation is Intake vs Nfrass', .9930))
+```
+
+```{r}
+xyplot(Caterpillars$Cassim ~ Caterpillars$Intake, type=c('p','r'))
+```
+
+### Regression Equation: $\hat{Cassim} = .0040488 + .0638894*\text{Intake}$
+
+```{r}
+IntakeCassimLm = lm(Caterpillars$Cassim ~ Caterpillars$Intake)
+summary(IntakeCassimLm)
+```
+
+```{r}
+cor.test(Caterpillars$Intake, Caterpillars$Cassim)
+```
+
+### Based on the p-value, the true correlation is significantly different from 0
+
+```{r}
+plot(IntakeCassimLm$fitted.values, IntakeCassimLm$residuals)
+abline(h=0)
+```
+
+```{r}
+qqnorm(IntakeCassimLm$residuals, main='QQ plot')
+qqline(IntakeCassimLm$residuals)
+```
+
+```{r}
+summary(IntakeCassimLm)
+```
+
+### The plots are very similar in shape to the plots for WetFrass vs Nfrass. The regression equation would work well for prediction as about 98% of the variance in the response is explained by the model, but inference on the coefficients would not be valid because of violations of the assumptions of the linear regression model (most noticeable in this case is violation of normality of the errors, but also the non linear trend in the errors in the fit vs residuals plot)
+
+### Problem 2.42
+
+```{r}
+xyplot(ctp$LogNassim ~ ctp$LogMass, group=ctp$Fgp, type=c('p', 'r'), auto.key=TRUE)
+xyplot(ctp$LogNassim ~ ctp$LogMass,type=c('p', 'r'), auto.key=TRUE)
+```
+
+### The trend for caterpillars in the free growth period looks very similar to the simple linear model for all the data. It looks like the intercept is relatively equal. However, I think the regression line in the free growth period has a larger slope. 
+
+### Summary: Intake is a good predictor of Cassim with about a 99% correlation and $r^2$. So as Intake in grams/day of food goes up, the CO2 assimilation goes up. WetFrass is a good predictor of Nfrass w/ about a 98% correlation so again as the amount of solid waste produced by the caterpillars goes up, the amount of Nitrogen in frass generally goes up as well. For most of the models that I created, we could get a bette fit by incorporating the Fgp and Instar variables into the model. This is because the models across the entire data set provided an imperfect fit across the different life stages and whether the caterpillar was in or out of the free growth period. Finally, LogMass is a decent predictor of LogNassim (there isn't a linear trend b/w the untransformed versions of these variables at least in this data). The LogMass model explains 75% of the variance in the LogNassim response variable, and there is a very likely a true relationship between these two variables as seen from the p-value obtained from the lm function
+
+### Problem 2.40
+
+```{r}
+### Predicting price from another variable
+data(HorsePrices)
+for(col in colnames(HorsePrices)) {
+    if(class(HorsePrices[[col]]) == 'numeric' 
+       || class(HorsePrices[[col]]) == 'integer' 
+       && col != 'Price') {
+        print(xyplot(HorsePrices$Price ~ HorsePrices[[col]], 
+              main=paste(col, 'vs. Price'), xlab=col,  group=HorsePrices$Sex, type=c('p','r'), auto.key=TRUE))
+        print(stats::cor(HorsePrices$Price, HorsePrices[[col]]))
+    }
+}
+```
+
+```{r}
+HorsePrices = na.omit(HorsePrices)
+femaleHorses = HorsePrices[HorsePrices$Sex == 'f',]
+maleHorses = HorsePrices[HorsePrices$Sex == 'm',]
+print(cor(femaleHorses$Price, femaleHorses$Age))
+print(cor(maleHorses$Price, maleHorses$Height))
+# This is the best fit for each sex based on xyplots and correlation 
+xyplot(femaleHorses$Price ~ femaleHorses$Age, type=c('p','r'))
+xyplot(maleHorses$Price ~ maleHorses$Height, type=c('p','r'))
+```
+
+### I'm gonna go with height as the predictor variable for males with no transformations and Age as predictor for females with no transformation (they have the best correlation with the target variable)
+
+```{r}
+femaleLm = lm(femaleHorses$Price ~ femaleHorses$Age)
+summary(femaleLm)
+```
+
+```{r}
+maleLm = lm(maleHorses$Price ~ maleHorses$Age)
+summary(maleLm)
+```
+
+```{r}
+qqnorm(femaleLm$residuals, main='Female QQ plot')
+qqline(femaleLm$residuals)
+```
+
+```{r}
+plot(femaleLm$fitted.values, femaleLm$residuals)
+abline(h=0)
+```
+
+### Summary: Based on the p-value for the female model, we can conclude that the true slope coefficient is signficantly different from 0. This is not true for the male model as there was a 45% chance of seeing a value (536.4) as extreme as we saw if the null hypothesis were true. Therefore the data suggests that the true value of the coefficient is zero, and there is no association between male height and the price males sell at. The conditions for inference on the female horses model do not seem to be violated. The errors seem roughly normal from the QQ plot, and there looks to be a zero mean with randomly distributed errors on the fit vs residuals plot. We can conclude that female horse price goes down as age goes up. Unfortunately, we cannot make any inference on height vs price of male horses because we could not reject the null hypthesis.
+
+### Problem 2.44
+
+```{r}
+beta_1 = .701 * 104807/657
+beta_0 = 247235 - beta_1 * 2009
+print(paste("Regression Equation: Gate_hat =", round(beta_0,2), "+", round(beta_1,2), "* Enroll"))
+```
+
+```{r}
+print(paste('R^2 (amount of variance in response explained by the model) =', round(.701^2*100,2)))
+```
+
+```{r}
+print(paste("Number of persons who will use the library with enrollment of 1445:", 22576.49 + 111.83 * 1445))
+```
+
+```{r}
+print(paste("Residual for enrollment 2200 and gate count 130,000:", 130000 - (22576.49 + 111.83 * 2200)))
+```
+
+```{r}
+```
