@@ -1,0 +1,93 @@
+```{r}
+library(readr)
+library(lattice)
+library(corrplot)
+countries = read_csv('Countries.csv')
+```
+
+### Research Question 1: Which explanatory variables are most related to InfantMortality?
+
+### Research Question 2: What is the best model for predicting GDPPC and do these variables sufficiently explain GDPPC? 
+
+Taking a peak at the data 
+
+```{r}
+head(countries)
+```
+
+We remove the categorical columns because that doesn't make sense for scatter plots
+
+```{r}
+categorical_cols <- c("Name")
+countries_numeric = countries[ , !(names(countries) %in% categorical_cols)]
+pairs(countries_numeric)
+```
+
+The Literacy and Agriculture variables plotted against InfantMortality look more linear (i.e. more correlated with each other). This is in contrast to most of the other plots, so we will focus on these. The correlation matrix plot below also supports this. 
+
+```{r}
+countries_corr_matrix <- cor(countries_numeric)
+corrplot(countries_corr_matrix, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+```
+
+##### Zoomed in versions of the associations we will be exploring
+
+```{r}
+xyplot(InfantMortality ~ Agriculture, data=countries, type=c('p', 'r'), auto.key=TRUE)
+xyplot(InfantMortality ~ Literacy, data=countries, type=c('p', 'r'), auto.key=TRUE)
+```
+
+```{r}
+infantVsAgriculture = lm(InfantMortality ~ Agriculture, data=countries)
+summary(infantVsAgriculture)
+```
+
+##### There is clearly a relationship b/w Agriculture and InfantMortality based on the p-value that is approaching zero, but the $r^2$ is only .556 so we will try out the same with literacy
+
+```{r}
+infantVsLiteracy = lm(InfantMortality ~ Literacy, data=countries)
+summary(infantVsLiteracy)
+```
+
+##### There is clearly a relationship b/w Literacy and InfantMortality based on the p-value that is approaching zero, but, similar to the model using Agriculture, the $r^2$ is  .66 so we will try out a final model using both variables 
+
+```{r}
+agricultureLiteracyInfantFirst = lm(InfantMortality ~ 
+                               Agriculture*Literacy + I(Literacy^2) + I(Agriculture^2),
+                               data=countries)
+summary(agricultureLiteracyInfantFirst)
+```
+
+### We see with a higher order model that we get about a 12% increase in the $r^2$ value. However, Agriculture^2 and Agriculture:Literacy have higher p-values so they don't appear to contribute as much to the model
+
+```{r}
+agricultureLiteracyInfantSecond = lm(sqrt(InfantMortality) ~ 
+                               Literacy + Agriculture + I(Literacy^2),
+                               data=countries)
+summary(agricultureLiteracyInfantSecond)
+```
+
+### Now the p-values of each variable is showing reasonable significance of the variables. So we will consider this model better because it is simpler than the previous and the $r^2$ is only 1% lower
+
+##### Theoretical model: $$ Y = \beta_0 + \beta_1x_1 + \beta_2x_1^2 + \beta_3x_2 + \epsilon $$<br>, where $x_1$ is Literacy, $x_2$ is Agriculture, and $Y$ is InfantMortality
+
+##### Predicted model: $$\hat{Y} = 36.214 + 78.814x_1 - 111.751x_1^2 + 50.095x_2$$
+
+##### Assessing model assumptions: 
+
+The QQ plot trails off a lot at the tails, indicating that the normality assumptions is violated. The residuals vs fit graph looks good. It indicates approximately zero mean and constant variance of the error terms. Since normality is violated, we cannot use this model for inference
+
+```{r}
+par(mfrow=c(2,2))
+plot(agricultureLiteracyInfantSecond)
+```
+
+### Conclusion: 
+
+```{r}
+summary(lm(log(GDPPC) ~ I(Literacy^2), data=countries))
+```
+
+```{r}
+```
