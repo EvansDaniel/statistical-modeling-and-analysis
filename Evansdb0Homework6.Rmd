@@ -1,3 +1,5 @@
+### Daniel Evans - Homework 6
+
 ```{r}
 library(lattice)
 library(Stat2Data)
@@ -56,9 +58,28 @@ TukeyHSD(aov(BirthWeightOz ~ MomRace))
 
 ### Tukey's HSD is generally somewhere in between Bonferroni's and Fisher's LSD's assessment. In this case, it agrees with both methods (as you would expect since the other two methods agree). Therefore, we can be pretty confident that there is a significant difference between the previously mentioned groups. Interestingly, just as one example in this data, we can see that in the black-other case, Fisher's LSD < Tukey's HSD < Bonferroni, which is what we would also generally expect. Also, bonferroni has very high p-values (1) for the comparisons in which we would not reject the null for Fisher's LSD and Tukey's HSD, which again is what we would expect since it is more conservative. 
 
-## 2 - Does spinal misalignment lead to infertility?
-
-#### It seems that there is at least some evidence that chiropractic help can increase the likelyhood of fertility and achieving pregnancy. I search the research question has stated above on Google and found an article http://americanpregnancy.org/infertility/infertility-and-chiropractic-care/ that stated fertility issues are associated with improper nervous system function. Since this is no research paper, I continued my search and found another article http://icpa4kids.org/Chiropractic-Research/the-chiropractic-approach-to-infertility-a-review-of-recent-chiropractic-research/All-Pages.html. It states that normal nerve function is essential for good health, and that chiropractors make corrections that allow for a properly functioning nervous system. The fifth annotation from this article provided more insight quoting this study: https://www.vertebralsubluxationresearch.com/2017/09/06/healthy-pregnancy-in-a-previously-infertile-patient-following-d-n-f-t-chiropractic-care-a-case-report/. The study states essentially that a women was unable to become pregnant via in vitro fertalization and then 3 weeks later sought chiropractic care. She was fund to have significant muscle asymmetry, which has soon corrected. About 2 months later, the women successfully became pregnant via in vitro fertilization. This is a very small sample size (exactly 1) with potentially numerous factors (the linked page does not give details on how they controlled the case study) at work, but it does suggest that chiropractic help can lead to a higher chance of becoming pregnant. The sixth footnote of the same icpa4kis article directs us to another case study (found here: https://www.vertebralsubluxationresearch.com/2017/09/06/female-infertility-and-chiropractic-wellness-care-a-case-study-on-the-autonomic-nervous-system-response-while-under-subluxation-based-chiropractic-care-and-subsequent-fertility/) of a women who was unable to become pregnant and only became pregnant after receiving nine months of chiropractic care. There are several other case studies quoted in that same article, each of which suggesting the effectiveness of chiropractic care in increasing the likelihood of becoming pregnant. 
+## 2 - 5.34c
 
 ```{r}
+# We have a significant F test 
+data(Blood1)
+attach(Blood1)
+bpOverweightLm = lm(SystolicBP ~ Overwt)
+blood1Anova = anova(bpOverweightLm)
+# We have a significant F test so we can continue to LSD test 
+blood1Anova
+print(LSD.test(SystolicBP, Overwt, 498, 729.5, group=FALSE))
 ```
+
+### Based on the results above, we see that every comparison between the two groups is significant. We see that Normal vs Overweight (0 - 1) and Overweight vs Obese (1 - 2) has a relatively high p-values. For a more conservative test such as bonferroni these might be insignificant. It is relatively unsurprising that the most significant difference is between the Normal and Overweight levels (0 - 2). The differences in the means for these two groups is pretty high, which makes sense. 
+
+```{r}
+# Let's trt bonferroni's test just for fun 
+pairwise.t.test(SystolicBP, Overwt, p.adj = 'bonferroni')
+```
+
+### Based on the test, we can be pretty confident in the results of Fisher's LSD because Bonferroni agrees in all comparisons Therefore, we can conclude that there is a significant difference between the means of each group, and a much larger difference between the Normal and Obese group
+
+## 3 - Does spinal misalignment lead to infertility?
+
+#### It seems that there is at least some evidence that chiropractic help can increase the likelyhood of fertility and achieving pregnancy. I search the research question has stated above on Google and found an article http://americanpregnancy.org/infertility/infertility-and-chiropractic-care/ that stated fertility issues are associated with improper nervous system function. Since this is no research paper, I continued my search and found another article http://icpa4kids.org/Chiropractic-Research/the-chiropractic-approach-to-infertility-a-review-of-recent-chiropractic-research/All-Pages.html. It states that normal nerve function is essential for good health, and that chiropractors make corrections that allow for a properly functioning nervous system. The fifth annotation from this article provided more insight quoting this study: https://www.vertebralsubluxationresearch.com/2017/09/06/healthy-pregnancy-in-a-previously-infertile-patient-following-d-n-f-t-chiropractic-care-a-case-report/. The study states essentially that a women was unable to become pregnant via in vitro fertalization and then 3 weeks later sought chiropractic care. She was fund to have significant muscle asymmetry, which has soon corrected. About 2 months later, the women successfully became pregnant via in vitro fertilization. This is a very small sample size (exactly 1) with potentially numerous factors (the linked page does not give details on how they controlled the case study) at work, but it does suggest that chiropractic help can lead to a higher chance of becoming pregnant. The sixth footnote of the same icpa4kis article directs us to another case study (found here: https://www.vertebralsubluxationresearch.com/2017/09/06/female-infertility-and-chiropractic-wellness-care-a-case-study-on-the-autonomic-nervous-system-response-while-under-subluxation-based-chiropractic-care-and-subsequent-fertility/) of a women who was unable to become pregnant and only became pregnant after receiving nine months of chiropractic care. There are several other case studies quoted in that same article, each of which suggesting the effectiveness of chiropractic care in increasing the likelihood of becoming pregnant. 
