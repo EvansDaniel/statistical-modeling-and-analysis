@@ -1,0 +1,64 @@
+```{r}
+library(lattice)
+library(Stat2Data)
+library(agricolae)
+data(NCbirths)
+
+nc = NCbirths
+```
+
+```{r}
+head(nc)
+attach(nc)
+```
+
+```{r}
+unique(MomRace)
+```
+
+# 1a
+
+```{r}
+birthWeightMomRaceLm = lm(BirthWeightOz ~ MomRace)
+lmAnova = anova(birthWeightMomRaceLm)
+lmAnova
+```
+
+```{r}
+plot(birthWeightMomRaceLm)
+```
+
+### From the plots above, we can see that the model deviates significantly from the theoretical quantiles, indicating nonnormality. Therefore, we can not make confident inferences from this model. However, the model suggests that there is a real difference between the birth weights depending on the mother's race. 
+
+## 1b - Fisher's LSD 
+
+```{r}
+# We have a significant F test 
+lmAnova
+print(LSD.test(BirthWeightOz, MomRace, 1446, 489.856, group=FALSE))
+```
+
+### According to Fisher's LSD, we have a significant difference between the birth weight of babies with a mother of black and hispanic race and black and white race. 
+
+## 1c - Bonferroni
+
+```{r}
+pairwise.t.test(BirthWeightOz, MomRace, p.adj = 'bonferroni')
+```
+
+### While Bonferroni is more conservative than Fisher's LSD, the two agrees in this case. (black vs hispanic and black vs white baby weights are significantly different)
+
+## 1d - Tukey's HSD
+
+```{r}
+TukeyHSD(aov(BirthWeightOz ~ MomRace))
+```
+
+### Tukey's HSD is generally somewhere in between Bonferroni's and Fisher's LSD's assessment. In this case, it agrees with both methods (as you would expect since the other two methods agree). Therefore, we can be pretty confident that there is a significant difference between the previously mentioned groups. Interestingly, just as one example in this data, we can see that in the black-other case, Fisher's LSD < Tukey's HSD < Bonferroni, which is what we would also generally expect. Also, bonferroni has very high p-values (1) for the comparisons in which we would not reject the null for Fisher's LSD and Tukey's HSD, which again is what we would expect since it is more conservative. 
+
+## 2 - Does spinal misalignment lead to infertility?
+
+#### It seems that there is at least some evidence that chiropractic help can increase the likelyhood of fertility and achieving pregnancy. I search the research question has stated above on Google and found an article http://americanpregnancy.org/infertility/infertility-and-chiropractic-care/ that stated fertility issues are associated with improper nervous system function. Since this is no research paper, I continued my search and found another article http://icpa4kids.org/Chiropractic-Research/the-chiropractic-approach-to-infertility-a-review-of-recent-chiropractic-research/All-Pages.html. It states that normal nerve function is essential for good health, and that chiropractors make corrections that allow for a properly functioning nervous system. The fifth annotation from this article provided more insight quoting this study: https://www.vertebralsubluxationresearch.com/2017/09/06/healthy-pregnancy-in-a-previously-infertile-patient-following-d-n-f-t-chiropractic-care-a-case-report/. The study states essentially that a women was unable to become pregnant via in vitro fertalization and then 3 weeks later sought chiropractic care. She was fund to have significant muscle asymmetry, which has soon corrected. About 2 months later, the women successfully became pregnant via in vitro fertilization. This is a very small sample size (exactly 1) with potentially numerous factors (the linked page does not give details on how they controlled the case study) at work, but it does suggest that chiropractic help can lead to a higher chance of becoming pregnant. The sixth footnote of the same icpa4kis article directs us to another case study (found here: https://www.vertebralsubluxationresearch.com/2017/09/06/female-infertility-and-chiropractic-wellness-care-a-case-study-on-the-autonomic-nervous-system-response-while-under-subluxation-based-chiropractic-care-and-subsequent-fertility/) of a women who was unable to become pregnant and only became pregnant after receiving nine months of chiropractic care. There are several other case studies quoted in that same article, each of which suggesting the effectiveness of chiropractic care in increasing the likelihood of becoming pregnant. 
+
+```{r}
+```
