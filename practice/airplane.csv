@@ -1,0 +1,171 @@
+Name,Plane,Hand,Length
+HH,Pink,Right,217
+HH,Dark Yellow,Right,196
+HH,Light Blue,Right,100
+HH,Light Yellow,Right,30
+HH,White,Right,172
+HH,Pink,Left,274
+HH,Dark Yellow,Left,123
+HH,Light Blue,Left,109
+HH,Light Yellow,Left,90
+HH,White,Left,44
+HW,Blue,D,140
+HW,White,D,133
+HW,Yellow,D,240
+HW,Light Yellow,D,161
+HW,Pink,D,150
+HW,Blue,N,70
+HW,White,N,104
+HW,Yellow,N,152
+HW,Light Yellow,N,165
+HW,Pink,N,140
+EO,Pink,N,188
+EO,Yellow,N,104
+EO,Light Yellow,N,150
+EO,White,N,85
+EO,Blue,N,84
+EO,Pink,D,286
+EO,Yellow,D,170
+EO,Light Yellow,D,150
+EO,White,D,158
+EO,Blue,D,188
+JG,Pink,N,295
+JG,Yellow,N,90
+JG,Light Yellow,N,205
+JG,White,N,240
+JG,Blue,N,190
+JG,Pink,D,352
+JG,Yellow,D,91
+JG,Light Yellow,D,95
+JG,White,D,118
+JG,Blue,D,111
+MW,Arrow,N,128
+MW,Delta,N,89
+MW,Condor,N,119
+MW,Dart,N,211
+MW,Dragonfly,N,23
+MW,Arrow,D,194
+MW,Delta,D,193
+MW,Condor,D,154
+MW,Dart,D,330
+MW,Dragonfly,D,70
+AP,Blue,D,150
+AP,White,D,134
+AP,Yellow,D,258
+AP,Light Yellow,D,160
+AP,Pink,D,148
+AP,Blue,N,89
+AP,White,N,113
+AP,Yellow,N,148
+AP,Light Yellow,N,188
+AP,Pink,N,227
+KO,Condor,D,203
+KO,Delta,D,173
+KO,Firefly,D,181
+KO,White,D,129
+KO,Pink,D,168
+KO,Condor,N,132
+KO,Delta,N,186
+KO,Firefly,N,180
+KO,White,N,222
+KO,Pink,N,204
+MT,Pink,D,312
+MT,Pink,N,161
+MT,Dragon,D,91.5
+MT,Dragon,N,148
+MT,Condor,D,145
+MT,Condor,N,141
+MT,White,D,208
+MT,White,N,183
+MT,Blue,D,162
+MT,Blue,N,101
+CC,Blue,LEFT,91
+CC,Yellow,LEFT,144
+CC,Dragonfly,LEFT,154
+CC,Pink,LEFT,180
+CC,White,LEFT,264
+CC,Blue,RIGHT,96
+CC,Yellow,RIGHT,61
+CC,Dragonfly,RIGHT,153
+CC,Pink,RIGHT,271
+CC,White,RIGHT,168
+JR,Blue,LEFT,113
+JR,Yellow,LEFT,150
+JR,Dragonfly,LEFT,175
+JR,Pink,LEFT,270
+JR,White,LEFT,270
+JR,Blue,RIGHT,123
+JR,Yellow,RIGHT,122
+JR,Dragonfly,RIGHT,163
+JR,Pink,RIGHT,222
+JR,White,RIGHT,324
+ER,Blue,LEFT,152
+ER,Yellow,LEFT,260
+ER,Dragonfly,LEFT,150
+ER,Pink,LEFT,170
+ER,White,LEFT,145
+ER,Blue,RIGHT,77
+ER,Yellow,RIGHT,150
+ER,Dragonfly,RIGHT,153
+ER,Pink,RIGHT,137
+ER,White,RIGHT,101
+MC,Blue,LEFT,146
+MC,Yellow,LEFT,194
+MC,Dragonfly,LEFT,147
+MC,Pink,LEFT,184
+MC,White,LEFT,241
+MC,Blue,RIGHT,154
+MC,Yellow,RIGHT,122
+MC,Dragonfly,RIGHT,125
+MC,Pink,RIGHT,171
+MC,White,RIGHT,207
+RH,pink,D,74
+RH,blue,D,124
+RH,white,D,183
+RH,dark yellow,D,156
+RH,light yellow,D,45
+RH,pink,N,187
+RH,blue,N,88
+RH,white,N,145
+RH,dark yellow,N,124
+RH,light yellow,N,63
+DE,PINK,D,166
+DE,WHITE,D,133
+DE,YELLOW,D,290
+DE,BLUE,D,164
+DE,DRAGON,D,124
+DE,PINK,N,163
+DE,WHITE,N,150
+DE,YELLOW,N,224
+DE,BLUE,N,163
+DE,DRAGON,N,174
+BA,White,D,98.5
+BA,Pink,D,245
+BA,Yellow,D,70
+BA,Blue,D,119
+BA,Dragon,D,84
+BA,White,N,139
+BA,Pink,N,138
+BA,Yellow,N,60
+BA,Blue,N,109
+BA,Dragon,N,121
+DH,Blue,D,182
+DH,Blue,N,140
+DH,White,D,135
+DH,White,N,120
+DH,Pink,D,97
+DH,Pink,N,127
+DH,Yellow,D,62
+DH,Yellow,N,67
+DH,Dragon,D,83
+DH,Dragon,N,98
+SM,Pink,R,225
+SM,Pink,L,197
+SM,White,R,180
+SM,White,L,63
+SM,Cream,R,52
+SM,Cream,L,44
+SM,yellow,R,112
+SM,yellow,L,112
+SM,Blue,R,110
+SM,Blue,L,112
