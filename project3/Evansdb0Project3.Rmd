@@ -1,0 +1,296 @@
+<h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc" style="margin-top: 1em;"><ul class="toc-item"><li><span><a href="#Salary-modeled-with-CompetePeers-and-KinshipDevelopers" data-toc-modified-id="Salary-modeled-with-CompetePeers-and-KinshipDevelopers-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Salary modeled with CompetePeers and KinshipDevelopers</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#Those-who-see-themselves-as-competing-with-their-peers-make-less-money!-Those-who-feel-kinship-with-other-developers-also-make-more-money-then-those-who-don't!-This-somewhat-holds-true-in-the-US.-Those-who-strong-compete-with-peers-make-less-and-those-who-feel-no-kinship-with-other-developers-also-make-less." data-toc-modified-id="Those-who-see-themselves-as-competing-with-their-peers-make-less-money!-Those-who-feel-kinship-with-other-developers-also-make-more-money-then-those-who-don't!-This-somewhat-holds-true-in-the-US.-Those-who-strong-compete-with-peers-make-less-and-those-who-feel-no-kinship-with-other-developers-also-make-less.-1.0.1"><span class="toc-item-num">1.0.1&nbsp;&nbsp;</span>Those who see themselves as competing with their peers make less money! Those who feel kinship with other developers also make more money then those who don't! This somewhat holds true in the US. Those who strong compete with peers make less and those who feel no kinship with other developers also make less.</a></span></li></ul></li></ul></li><li><span><a href="#What-is-the-likelihood-of-a-person-being-male/female-given-his/her-answer-to-the-DiversityImportant-question?" data-toc-modified-id="What-is-the-likelihood-of-a-person-being-male/female-given-his/her-answer-to-the-DiversityImportant-question?-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>What is the likelihood of a person being male/female given his/her answer to the DiversityImportant question?</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#Female-=-0,-Male-=-1" data-toc-modified-id="Female-=-0,-Male-=-1-2.0.1"><span class="toc-item-num">2.0.1&nbsp;&nbsp;</span>Female = 0, Male = 1</a></span></li><li><span><a href="#Someone-who-strongly-disagrees-with-the-statement-&quot;Diversity-is-important-in-the-workplace&quot;-is-between-4-and-58-times-more-likely-to-be-male-than-someone-who-strongly-agrees-with-the-statement!-Furthermore,-you-are-between-3-and-12-times-more-likely-to-be-male-if-you-disagreed-with-the-statement-than-someone-who-strongly-agrees-with-the-statement." data-toc-modified-id="Someone-who-strongly-disagrees-with-the-statement-&quot;Diversity-is-important-in-the-workplace&quot;-is-between-4-and-58-times-more-likely-to-be-male-than-someone-who-strongly-agrees-with-the-statement!-Furthermore,-you-are-between-3-and-12-times-more-likely-to-be-male-if-you-disagreed-with-the-statement-than-someone-who-strongly-agrees-with-the-statement.-2.0.2"><span class="toc-item-num">2.0.2&nbsp;&nbsp;</span>Someone who strongly disagrees with the statement "Diversity is important in the workplace" is between 4 and 58 times more likely to be male than someone who strongly agrees with the statement! Furthermore, you are between 3 and 12 times more likely to be male if you disagreed with the statement than someone who strongly agrees with the statement.</a></span></li></ul></li></ul></li><li><span><a href="#Full-three-way-anova-model-for-salary-as-function-of-InTheZone,-DifficultCommunication,-and-OtherPeoplesCode.-Could-not-find-any-significant-interactions" data-toc-modified-id="Full-three-way-anova-model-for-salary-as-function-of-InTheZone,-DifficultCommunication,-and-OtherPeoplesCode.-Could-not-find-any-significant-interactions-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Full three way anova model for salary as function of InTheZone, DifficultCommunication, and OtherPeoplesCode. Could not find any significant interactions</a></span><ul class="toc-item"><li><span><a href="#To-optimize-salary:" data-toc-modified-id="To-optimize-salary:-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>To optimize salary:</a></span></li></ul></li><li><span><a href="#Linear-Regression-Model-for-Salary-As-function-of-YearsProgram,-Country,-and-DeveloperType" data-toc-modified-id="Linear-Regression-Model-for-Salary-As-function-of-YearsProgram,-Country,-and-DeveloperType-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Linear Regression Model for Salary As function of YearsProgram, Country, and DeveloperType</a></span><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#Doesn't-seem-to-matter-which-country-you-are-in-unless-you-are-in-US-(+territories),-UK,-Bermuda,-or-Uganda,-or-Kuwait,-Liechtenstein,-or-Switerzerland" data-toc-modified-id="Doesn't-seem-to-matter-which-country-you-are-in-unless-you-are-in-US-(+territories),-UK,-Bermuda,-or-Uganda,-or-Kuwait,-Liechtenstein,-or-Switerzerland-4.0.1"><span class="toc-item-num">4.0.1&nbsp;&nbsp;</span>Doesn't seem to matter which country you are in unless you are in US (+territories), UK, Bermuda, or Uganda, or Kuwait, Liechtenstein, or Switerzerland</a></span></li><li><span><a href="#administrator,-machine-learning,-data-scientist,-Embedded-applications/devices-developer,-graphic,-web-developer,-mobile-developer,-Desktop-applications-developer" data-toc-modified-id="administrator,-machine-learning,-data-scientist,-Embedded-applications/devices-developer,-graphic,-web-developer,-mobile-developer,-Desktop-applications-developer-4.0.2"><span class="toc-item-num">4.0.2&nbsp;&nbsp;</span>administrator, machine learning, data scientist, Embedded applications/devices developer, graphic, web developer, mobile developer, Desktop applications developer</a></span></li><li><span><a href="#Only-including-the-below-because-I-thought-it-was-interesting-and-was-somewhat-related-to-developer-type-and-its-association-with-salary.-Seems-that-machine-learning,-data-science,-and-embedded-applications-developers-make-the-most-money.--Not-surprising-that-&quot;graphic&quot;-programmers/designers-make-less-because-it-is-apparently-normal-for-video-game-developers-to-make-less-(not-that-those-are-the-only-graphic-programmers-but-still)." data-toc-modified-id="Only-including-the-below-because-I-thought-it-was-interesting-and-was-somewhat-related-to-developer-type-and-its-association-with-salary.-Seems-that-machine-learning,-data-science,-and-embedded-applications-developers-make-the-most-money.--Not-surprising-that-&quot;graphic&quot;-programmers/designers-make-less-because-it-is-apparently-normal-for-video-game-developers-to-make-less-(not-that-those-are-the-only-graphic-programmers-but-still).-4.0.3"><span class="toc-item-num">4.0.3&nbsp;&nbsp;</span>Only including the below because I thought it was interesting and was somewhat related to developer type and its association with salary. Seems that machine learning, data science, and embedded applications developers make the most money.  Not surprising that "graphic" programmers/designers make less because it is apparently normal for video game developers to make less (not that those are the only graphic programmers but still).</a></span></li></ul></li></ul></li></ul></div>
+
+```{r}
+library(lattice)
+library(readr)
+library(repr)
+library(cowplot)
+library(ggpubr)
+library(dplyr)
+
+# Change plot size to 4 x 3
+options(repr.plot.width=3, repr.plot.height=3)
+
+so = read_csv('stack_overflow_2017.csv')
+
+so_salary = so[!is.na(so$Salary),]
+so_us_salary = subset(so_salary, so_salary$Country == 'United States')
+
+salaryDCAnova = aov(so_salary$Salary ~ 
+                    so_salary$InTheZone + so_salary$DifficultCommunication + 
+                    so_salary$OtherPeoplesCode
+                   )
+
+summary(salaryDCAnova)
+# Uncomment below line to see the results specifically for the United States
+#so_salary = so_us_salary
+
+pairwise.t.test(so_salary$Salary, so_salary$InTheZone, p.adjust='bonferroni')
+
+dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$InTheZone), mean))
+names(dd) = c('Do you often get in the zone while coding?', 'Salary')
+# Sort the data frame by descending Salary
+dd[with(dd, order(-Salary)), ]
+
+pairwise.t.test(sqrt(so_salary$Salary), so_salary$DifficultCommunication,  p.adjust='bonferroni')
+
+dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$DifficultCommunication), mean))
+names(dd) = c('Do you have difficulty communicating your ideas to your peers?', 'Salary')
+# Sort the data frame by descending Salary
+dd[with(dd, order(-Salary)), ]
+
+#pairwise.t.test(so_salary$Salary, so_salary$OtherPeoplesCode,  p.adjust='bonferroni')
+
+dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$OtherPeoplesCode), mean))
+names(dd) = c('Maintaining Other People\'s Code is a Form of Torture', 'Salary')
+# Sort the data frame by descending Salary
+dd[with(dd, order(-Salary)), ]
+
+plot(salaryDCAnova)
+```
+
+```{r}
+head(so)
+```
+
+```{r}
+so_salary = so[!is.na(so$Salary),]
+so_us_salary = subset(so_salary, so_salary$Country == 'United States')
+```
+
+# Salary modeled with CompetePeers and KinshipDevelopers
+
+```{r}
+aov1 = aov(so_salary$Salary ~ so_salary$CompetePeers + so_salary$KinshipDevelopers)
+summary(aov1)
+
+pairwise.t.test(so_salary$Salary, so_salary$CompetePeers, p.adjust='bonferroni')
+pairwise.t.test(so_salary$Salary, so_salary$KinshipDevelopers, p.adjust='bonferroni')
+
+ggplot(so_salary, aes(x=factor(reorder(so_salary$CompetePeers, so_salary$Salary)), y=so_salary$Salary)) + stat_summary(fun.y="mean", geom="bar") +
+  coord_flip() + ggtitle('Salary by CompetePeers (Worldwide)')
+ggplot(so_salary, aes(x=factor(reorder(so_salary$KinshipDevelopers, so_salary$Salary)), y=so_salary$Salary)) + stat_summary(fun.y="mean", geom="bar") +
+  coord_flip() + ggtitle('Salary by KinshipDevelopers (Worldwide)')
+
+ggplot(so_us_salary, aes(x=factor(reorder(so_us_salary$CompetePeers, so_us_salary$Salary)), y=so_us_salary$Salary)) + stat_summary(fun.y="mean", geom="bar") +
+  coord_flip() + ggtitle('Salary by CompetePeers (US)')
+ggplot(so_us_salary, aes(x=factor(reorder(so_us_salary$KinshipDevelopers, so_us_salary$Salary)), y=so_us_salary$Salary)) + stat_summary(fun.y="mean", geom="bar") +
+  coord_flip() + ggtitle('Salary by KinshipDevelopers (US)')
+```
+
+### Those who see themselves as competing with their peers make less money! Those who feel kinship with other developers also make more money then those who don't! This somewhat holds true in the US. Those who strong compete with peers make less and those who feel no kinship with other developers also make less. 
+
+```{r}
+lm1 = lm(sqrt(so_salary$Salary + 1) ~ so_salary$JobSatisfaction + so_salary$CareerSatisfaction)
+summary(lm1)
+plot(lm1)
+```
+
+# What is the likelihood of a person being male/female given his/her answer to the DiversityImportant question?
+
+```{r}
+genders = cbind(so_us_salary)
+# Grep for anyone who marked themselves as female, regardless of transgender/non-conforming/etc.
+# Mark them as 'F' for female
+genders$Gender[grep('Female', genders$Gender)] <- 0
+# Do the same for males
+genders$Gender[grep('Male', genders$Gender)] <- 1
+# Third category for purely transgender/non-conforming
+table(genders$Gender)
+```
+
+### Female = 0, Male = 1
+
+```{r}
+# http://support.minitab.com/en-us/minitab-express/1/help-and-how-to/modeling-statistics/regression/how-to/binary-logistic-regression/interpret-the-results/key-results/#step-1-determine-whether-the-association-between-the-response-and-the-term-is-statistically-significant
+# https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+# https://stats.stackexchange.com/questions/33240/interpretation-of-reference-category-in-logistic-regression
+
+
+# https://stats.idre.ucla.edu/r/dae/logit-regression/
+# https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+maleAndFemale = subset(genders, (genders$Gender == 1 | genders$Gender == 0))
+maleAndFemale$Gender = as.numeric(maleAndFemale$Gender)
+# attach(maleAndFemale)
+
+#library(dplyr)
+
+column = 'DiversityImportant'
+print(column)
+
+females = subset(genders, genders$Gender == 0)
+males = subset(genders, genders$Gender == 1)
+
+randomRows = sample(1:length(males[,1]), nrow(females), replace=FALSE)
+randomMales = males %>% slice(randomRows)
+
+newMalesAndFemales = rbind(randomMales, females)
+newMalesAndFemales$Gender = as.numeric(newMalesAndFemales$Gender)
+newMalesAndFemales$DiversityImportant = as.factor(newMalesAndFemales$DiversityImportant)
+
+# Force R to use 'Strongly Agree' level as the reference level
+newMalesAndFemales <- within(newMalesAndFemales, 
+                             DiversityImportant <- relevel(DiversityImportant, ref = 'Strongly agree'))
+
+gen.glm = glm(newMalesAndFemales$Gender~factor(newMalesAndFemales[[column]]), 
+              family=binomial, data = newMalesAndFemales)
+summary(gen.glm)
+
+oddsRatioTable = addmargins(table(newMalesAndFemales$Gender, newMalesAndFemales[[column]]), 1)
+oddsRatioTable
+
+b0 = gen.glm$coefficients[1] # intercept
+b1 = gen.glm$coefficients[2] # slope
+plot(newMalesAndFemales$DiversityImportant, jitter(newMalesAndFemales$Gender,amount=.1),ylab="Gender")
+# Compute probabilities from the log odds 
+p = exp(coef(gen.glm)) / (1 + exp(coef(gen.glm)))
+cbind(est.=coef(gen.glm), Odds_Ratio=exp(coef(gen.glm)), P=p, exp(confint(gen.glm)))
+
+logLik(gen.glm)
+
+library(vcd)
+oddsratio(oddsRatioTable, log=FALSE)
+```
+
+### Someone who strongly disagrees with the statement "Diversity is important in the workplace" is between 4 and 58 times more likely to be male than someone who strongly agrees with the statement! Furthermore, you are between 3 and 12 times more likely to be male if you disagreed with the statement than someone who strongly agrees with the statement.
+
+# Full three way anova model for salary as function of InTheZone, DifficultCommunication, and OtherPeoplesCode. Could not find any significant interactions
+
+```{r}
+salaryDCAnova = aov(so_salary$Salary ~ 
+                    so_salary$InTheZone + so_salary$DifficultCommunication + 
+                    so_salary$OtherPeoplesCode + so_salary$CheckInCode
+                   )
+
+summary(salaryDCAnova)
+so_salary = so[!is.na(so$Salary),]
+# Uncomment below line to see the results specifically for the United States
+#so_salary = so_us_salary
+
+#pairwise.t.test(so_salary$Salary, so_salary$InTheZone, p.adjust='bonferroni')
+
+#dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$InTheZone), mean))
+#names(dd) = c('Do you often get in the zone while coding?', 'Salary')
+# Sort the data frame by descending Salary
+#dd[with(dd, order(-Salary)), ]
+
+pairwise.t.test(sqrt(so_salary$Salary), so_salary$DifficultCommunication,  p.adjust='bonferroni')
+
+dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$DifficultCommunication), mean))
+names(dd) = c('Do you have difficulty communicating your ideas to your peers?', 'Salary')
+# Sort the data frame by descending Salary
+dd[with(dd, order(-Salary)), ]
+
+#pairwise.t.test(so_salary$Salary, so_salary$OtherPeoplesCode,  p.adjust='bonferroni')
+
+#dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$OtherPeoplesCode), mean))
+#names(dd) = c('Maintaining Other People\'s Code is a Form of Torture', 'Salary')
+# Sort the data frame by descending Salary
+#dd[with(dd, order(-Salary)), ]
+
+#pairwise.t.test(so_salary$Salary, so_salary$CheckInCode, p.adjust='bonferroni')
+
+#dd = data.frame(aggregate(so_salary[['Salary']], list(so_salary$CheckInCode), mean))
+#names(dd) = c('How often do you check in code?', 'Salary')
+# Sort the data frame by descending Salary
+#dd[with(dd, order(-Salary)), ]
+
+plot(salaryDCAnova)
+```
+
+## To optimize salary: 
+- Be able to communicate your ideas to peeps -> Pretty significant (20,000)
+- Check in code semi-frequently (Couple times every week or two) 
+- Be willing to maintain code that other people wrote -> pretty significant (20,000)
+- Get in the zone when coding (20,000)
+
+# Linear Regression Model for Salary As function of YearsProgram, Country, and DeveloperType
+
+```{r}
+lm3 = lm(so_salary$Salary ~ so_salary$YearsProgram + so_salary$Country)
+lm3Summ = summary(lm3)
+# List the significant variables
+signifcantVariables = subset(data.frame(coef(lm3Summ)), t.value > 2)
+signifcantVariables
+```
+
+```{r}
+lm3Summ
+anova(lm3)
+plot(lm3)
+```
+
+### Doesn't seem to matter which country you are in unless you are in US (+territories), UK, Bermuda, or Uganda, or Kuwait, Liechtenstein, or Switerzerland 
+
+```{r}
+options(repr.plot.width=9, repr.plot.height=12)
+salaryYearsProgrammed = ggplot(so_salary, aes(x=reorder(so_salary$YearsProgram, so_salary$Salary), y=so_salary$Salary)) + 
+stat_summary(fun.y="mean", geom="bar") + 
+coord_flip() + 
+theme(axis.text.y  = element_text(size=5)) + ggtitle('Salary By Years Programmed')
+
+#options(repr.plot.width=5, repr.plot.height=12)
+a = ggplot(so_salary, aes(x=reorder(so_salary$Country, so_salary$Salary), y=so_salary$Salary)) + 
+stat_summary(fun.y="mean", geom="bar") + 
+coord_flip() + 
+theme(axis.text.y  = element_text(size=5)) + ggtitle('Salary By Country')
+
+ggarrange(salaryYearsProgrammed, a)
+```
+
+```{r}
+# Developer Type is difficult to interpret so removing from analysis
+options(repr.plot.width=40, repr.plot.height=175)
+ggplot(so_salary, aes(x=reorder(so_salary$DeveloperType, so_salary$Salary), y=so_salary$Salary)) + 
+stat_summary(fun.y="mean", geom="bar") +
+coord_flip()
+```
+
+### administrator, machine learning, data scientist, Embedded applications/devices developer, graphic, web developer, mobile developer, Desktop applications developer
+
+### Only including the below because I thought it was interesting and was somewhat related to developer type and its association with salary. Seems that machine learning, data science, and embedded applications developers make the most money.  Not surprising that "graphic" programmers/designers make less because it is apparently normal for video game developers to make less (not that those are the only graphic programmers but still). 
+
+```{r}
+temp = cbind(so_us_salary)
+web = temp[grep('Web developer', temp$DeveloperType, ignore.case = TRUE), ]
+types = c('administrator', 'Machine learning specialist', 'data scientist', 
+          'Embedded applications/devices developer', 'graphic', 'web developer', 
+          'mobile developer', 'Desktop applications developer')
+
+dds = list()
+means = c()
+i = 1
+for(t in types) {
+    dds[[i]] = temp[grep(t, temp$DeveloperType, ignore.case=TRUE), ]
+    means[[i]] = round(mean(dds[[i]]$Salary),2)
+    i = i +1
+}
+
+options(repr.plot.width=10, repr.plot.height=3)
+typesMeans = data.frame(types=types, means=means)
+ggplot(typesMeans, aes(x=typesMeans$types, y=typesMeans$means)) +
+stat_summary(fun.y="mean", geom="bar") + coord_flip() + ggtitle('Salary By Grepped Developer Type (US)')
+```
+
+```{r}
+temp = cbind(so_salary)
+web = temp[grep('Web developer', temp$DeveloperType, ignore.case = TRUE), ]
+types = c('administrator', 'Machine learning specialist', 'data scientist', 
+          'Embedded applications/devices developer', 'graphic', 'web developer', 
+          'mobile developer', 'Desktop applications developer')
+
+dds = list()
+means = c()
+i = 1
+for(t in types) {
+    dds[[i]] = temp[grep(t, temp$DeveloperType, ignore.case=TRUE), ]
+    means[[i]] = round(mean(dds[[i]]$Salary),2)
+    i = i +1
+}
+
+options(repr.plot.width=10, repr.plot.height=3)
+typesMeans = data.frame(types=types, means=means)
+ggplot(typesMeans, aes(x=typesMeans$types, y=typesMeans$means)) +
+stat_summary(fun.y="mean", geom="bar") + coord_flip() + ggtitle('Salary By Grepped Developer Type (Worldwide)')
+```
